@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  app:
+    container_name: jijikino/hd-container
+    restart: always
+    build: .
+    ports:
+      - "3001:3002"
+    links:
+      - hd-mongodb
+  mongo:
+    container_name: hd-mongodb
+    image: mongo
+    ports:
+      - "27017:27017"

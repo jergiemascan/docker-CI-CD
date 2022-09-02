@@ -1,0 +1,56 @@
+#Run dev after production as Dockerfile builds from top down
+#alpine sets up the base image with all the minimal tools node needs to get started
+#alpine keeps it lightweight and our images smaller https://alpinelinux.org
+#note alpine doesnt work well with CVE scanning
+#might need debian if migrating
+# set the build stage to production
+# syntax=docker/dockerfile:1
+
+FROM node:12-alpine
+
+node environment key: value
+#can be anything but we use it to state either production or development
+#use NODE_ENV as its common practice from express
+ENV NODE_ENV=production
+
+# add tini for finding and removing zombie processes
+RUN apk add --no-cache tini
+
+#use WORKDIR not CD or RUN mkdir
+#WORKDIR does both
+WORKDIR /app
+
+# put this copy before RUN as these don't change too often
+#the * is wild card so wont crash app if file foesnt exist
+#need to have ./ if multiple files
+COPY package.json package-lock.json* ./
+
+#before starting the app add the entrypoint for tini
+ENTRYPOINT ["/sbin/tini", "--"]
+
+RUN npm install --only=production && npm cache clean--force
+
+#use node to start not npm
+#using npm will cause npm to run and then node to run as a sub process
+CMD ["node", "index.js"]
+
+#expose contisner to port
+EXPOSE 3000
+
+#************ DEVELOPMENT**********************************#
+FROM prod as dev
+ENV NODE_ENV=development
+
+#we wont run again everything in the first stage and will now add dev dependencies
+# dont need to wory about cache clean as not on server just local machine
+RUN npm install --only=development
+CMD ["./node_modules/nodemon/bin/nodemon.js", "index.js"]
+
+#*******************TEST*******************#
+#This is good for contineous integration and testing
+# ie. : might want to set up with Jenkins to automate building and testing the image
+#wont have to change dockerfile everytimne we update tests
+
+FROM dev as test
+
+CMD ["run test command in here"]

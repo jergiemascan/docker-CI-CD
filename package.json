@@ -1,0 +1,39 @@
+{
+    "name": "herodock-test",
+    "version": "1.0.0",
+    "description": "Learning heroku and docker",
+    "main": "index.js",
+    "scripts": {
+        "dev": "nodemon index.js",
+        "start": "node index.js",
+        "test": "jest --group=-component --group=-integration",
+        "componentTest": "jest --group=component",
+        "integrationTest": "jest --group=integration",
+        "build": "cd frontend && npm install && npm run build"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/jergiemascan/heroDock-test.git"
+    },
+    "author": "Jiji Mascan",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/jergiemascan/heroDock-test/issues"
+    },
+    "homepage": "https://github.com/jergiemascan/heroDock-test#readme",
+    "dependencies": {
+        "cors": "^2.8.5",
+        "dotenv": "^16.0.1",
+        "express": "^4.18.1",
+        "mongoose": "^6.5.3",
+        "path": "^0.12.7"
+    },
+    "devDependencies": {
+        "jest": "^28.1.3",
+        "jest-runner-groups": "^2.2.0",
+        "nodemon": "^2.0.19"
+    },
+    "engines": {
+        "node": " 16"
+    }
+}
