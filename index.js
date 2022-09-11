@@ -18,15 +18,15 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 console.log("Hello from this is JijiKinos container test");
 
-// if (
-//     process.env.NODE_ENV === "staging" ||
-//     process.env.NODE_ENV === "production"
-// ) {
-//     app.use(express.static(path.join(__dirname, "frontend/build")));
-//     app.get("*", (req, res) => {
-//         res.sendFile(path.join(__dirname + "frontend/build/index.html"));
-//     });
-// }
+if (
+    process.env.NODE_ENV === "staging" ||
+    process.env.NODE_ENV === "production"
+) {
+    app.use(express.static(path.join(__dirname, "frontend/build")));
+    app.get("*", (req, res) => {
+        res.sendFile(path.join(__dirname + "frontend/build/index.html"));
+    });
+}
 
 const auths = require("./routes");
 app.use("/auth", auths);
