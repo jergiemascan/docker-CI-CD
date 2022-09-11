@@ -14,14 +14,14 @@ app.use(express.json());
 const auths = require("./routes");
 app.use("/auth", auths);
 
-app.get("/home", function (req, res) {
+app.get("/", function (req, res) {
     res.status(200).send({ message: "Hello from backend" });
 });
+console.log("Hello from this is JijiKinos container test");
 
 const swaggerDoc = swaggerJsDoc(swaggerDocument);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
-console.log("Hello from this is JijiKinos container test");
 // if (
 //     process.env.NODE_ENV === "staging" ||
 //     process.env.NODE_ENV === "production"
