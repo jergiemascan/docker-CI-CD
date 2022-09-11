@@ -1,10 +1,20 @@
 const mongoose = require("mongoose");
+const swaggerUi = require("swagger-ui-express");
+const swaggerJsDoc = require("swagger-jsdoc");
+const swaggerDocument = require("./swagger.json");
 const express = require("express");
 const app = express();
 const path = require("path");
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(express.json());
+
+const swaggerDoc = swaggerJsDoc(swaggerDocument);
+
+const user = require("./routes");
+app.use("/", user);
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 console.log("Hello from this is JijiKinos container test");
 
@@ -20,7 +30,6 @@ console.log("Hello from this is JijiKinos container test");
 
 const auths = require("./routes");
 app.use("/auth", auths);
-// app.use("/auth/v1/signin ", auths);
 
 mongoose
     .connect(
