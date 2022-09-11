@@ -7,7 +7,16 @@ exports.signup = async (req, res, next) => {
         confirmPassword: req.body.confirmPassword,
     });
 
-    res.sendStatus(201).json({
+    try {
+        if (!newUser) {
+            res.status(401).json({
+                status: "Please enter your email and password!",
+            });
+        }
+    } catch (err) {
+        console.log(err);
+    }
+    res.status(201).json({
         status: "success",
         data: {
             user: newUser,

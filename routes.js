@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
-// const { signup, login } = require("./authController");
+const { signup, login } = require("./authController");
 
-// router.post("/signup/v1", signup);
-// router.post("/signin/v1", login);
+router.post("/signup/v1", signup);
+router.post("/signin/v1", login);
 
 /**
  * @openapi
