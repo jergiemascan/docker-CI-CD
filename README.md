@@ -1,14 +1,14 @@
 # <h2> JWT STRUCTURE </h2>
 
-```  mermaid
+```mermaid
 sequenceDiagram
   participant Client
   participant Server
 
 Client->>Server :1
   Note over Client: Post req. login (email/Pw)
-  
-  
+
+
   Note over Server: Credentials correct && user exist? 'unique JWT created' : 'error message'
 
   Note over Client: JWT sparas: cookies || local storage

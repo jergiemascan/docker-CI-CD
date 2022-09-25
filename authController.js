@@ -5,6 +5,8 @@ exports.signup = async (req, res, next) => {
         email: req.body.email,
         password: req.body.password,
         confirmPassword: req.body.confirmPassword,
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
     });
 
     try {
@@ -23,7 +25,6 @@ exports.signup = async (req, res, next) => {
         },
     });
 };
-
 exports.login = async (req, res, next) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email }).select("+password");
@@ -47,3 +48,30 @@ exports.login = async (req, res, next) => {
         });
     }
 };
+
+// exports.update = async (req, res, next) => {
+//     const user = await User.findById(req.params.id);
+//     // const user = await User.findOne({ id }).select("+password");
+//     // if (user) {
+//     //     user.name = req.body.name || user.name;
+//     // user.email = req.body.email || user.email;
+//     const updatedUser = await user.save();
+//     res.send({ message: "User Updated", user: updatedUser });
+//     // } else if (!user) {
+//     res.status(401).json({
+//         status: "no user found",
+//     });
+//     // }
+// };
+// exports.remove = async (req, res, next) => {
+//     const user = await User.findById(req.params.id);
+//     if (user) {
+//         await user.remove();
+//         res.status(200).json({ message: "user deleted" });
+//     }
+//     if (!user) {
+//         res.status(401).json({
+//             status: "no user found",
+//         });
+//     }
+// };

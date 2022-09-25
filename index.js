@@ -3,7 +3,7 @@ const swaggerUi = require("swagger-ui-express");
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerDocument = require("./swagger.json");
 const express = require("express");
-const app = express();
+const app = require("./app");
 const path = require("path");
 const dotEnv = require("dotenv");
 dotEnv.config();
@@ -12,37 +12,27 @@ app.use(bodyParser.json());
 app.use(express.json());
 
 const auths = require("./routes");
-app.use("/auth", auths);
+app.use("/", auths);
 
-app.get("/", function (req, res) {
-    res.status(200).send({ message: "Hello from backend" });
-});
+// app.get("/", function (req, res) {
+//     res.status(200).send({ message: "Hello from backend" });
+// });
 console.log("Hello from this is JijiKinos container test");
 
 const swaggerDoc = swaggerJsDoc(swaggerDocument);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
-// if (
-//     process.env.NODE_ENV === "staging" ||
-//     process.env.NODE_ENV === "production"
-// ) {
-//     app.use(express.static(path.join(__dirname, "frontend/build")));
-//     app.get("*", (req, res) => {
-//         res.sendFile(path.join(__dirname + "frontend/build/index.html"));
-//     });
-// }
-
-console.log(process.env.PORT);
 const db = async () => {
     try {
-        await mongoose.connect(process.env.DATABASE);
+        mongoose.connect(process.env.DATABASE);
         console.log("Connected to DB");
     } catch (e) {
         console.log(e);
     }
 };
 db();
-const PORT = process.env.PORT || 3001;
+
+const PORT = process.env.PORT || 3002;
 app.listen(`${PORT}`, () => {
     console.log(`Hello from backend server 👋🏻 listening on port ${PORT}`);
 });
