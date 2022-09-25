@@ -8,9 +8,9 @@
         "dev": "nodemon index.js",
         "start": "node index.js",
         "test": "jest --watchAll --group=-component --group=-integration",
-        "componenttest": "jest --group=component",
-        "integrationtest": "jest --group=integration ",
-        "unittest": "jest --group=unit"
+        "componenttest": "jest --group=-component",
+        "integrationtest": "jest --group=-integration ",
+        "unittest": "jest --group=-unit"
     },
     "pre-commit": [
         "lint"
